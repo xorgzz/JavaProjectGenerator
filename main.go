@@ -17,6 +17,8 @@ func main () {
     fmt.Println("Java Project Creator")
     projLoc, err := os.Getwd()
     var finalLoc string
+    var pack string
+
     if err == nil {
         fmt.Printf("Current project directory %s\n", projLoc)
         fmt.Printf("Project directory: ")
@@ -24,7 +26,10 @@ func main () {
         if finalLoc[0] != '/' {
            finalLoc = projLoc + "/" + finalLoc 
         }
-
+    
+        fmt.Print("Project Alias: ")
+        fmt.Scan(&pack)
+        
         tmp := strings.SplitAfter(finalLoc, "/")
         path := strings.Join(tmp[0:len(tmp)-1], "")
         if exists(path) {
@@ -32,10 +37,11 @@ func main () {
             os.Mkdir(finalLoc, 0755)
             srcPath := finalLoc + "/src"
             os.Mkdir(srcPath, 0755)
+            os.Mkdir(srcPath+"/"+pack, 755)
             outPath := finalLoc + "/out"
             os.Mkdir(outPath, 0755)
-            os.WriteFile(srcPath+"/Main.java", []byte("public class Main {\n\tpublic static void main(String[] args) {\n\n\t}\n}"), 0666)
-            os.WriteFile(finalLoc+"/build.sh", []byte("#!/usr/bin/sh\n\njavac -d "+outPath+" "+srcPath+"/*.java && cd out && java Main"), 0766)
+            os.WriteFile(srcPath+"/"+pack+"/Main.java", []byte("package "+pack+";\n\npublic class Main {\n\tpublic static void main(String[] args) {\n\n\t}\n}"), 0666)
+            os.WriteFile(finalLoc+"/build.sh", []byte("#!/usr/bin/sh\n\njavac -d "+outPath+" "+srcPath+"/"+pack+"/*.java && cd out/"+pack+" && java Main"), 0766)
         } else {
             fmt.Println("[!] Directory doesn't exist")
         }
