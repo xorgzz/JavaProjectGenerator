@@ -34,8 +34,8 @@ func main () {
             os.Mkdir(srcPath, 0755)
             outPath := finalLoc + "/out"
             os.Mkdir(outPath, 0755)
-            os.WriteFile(srcPath+"/Main.java", []byte("import java.util.*\n\nclass Main {\n\tpublic static void main(String[], args) {\n\n\t}\n}"), 0666)
-            os.WriteFile(finalLoc+"/build.sh", []byte("#!/usr/bin/sh\n\njavac -d "+outPath+" "+srcPath+"/*.java && cd out && java out.Main"), 0766)
+            os.WriteFile(srcPath+"/Main.java", []byte("public class Main {\n\tpublic static void main(String[] args) {\n\n\t}\n}"), 0666)
+            os.WriteFile(finalLoc+"/build.sh", []byte("#!/usr/bin/sh\n\njavac -d "+outPath+" "+srcPath+"/*.java && cd out && java Main"), 0766)
         } else {
             fmt.Println("[!] Directory doesn't exist")
         }
