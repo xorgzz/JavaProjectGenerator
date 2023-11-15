@@ -20,7 +20,6 @@ func main () {
     var pack string
 
     if err == nil {
-        fmt.Printf("Current project directory %s\n", projLoc)
         fmt.Printf("Project directory: ")
         fmt.Scan(&finalLoc)
         if finalLoc[0] != '/' {
