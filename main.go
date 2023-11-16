@@ -4,7 +4,8 @@ import (
     "os"
     "strings"
 )
-
+// Function that checks if directory of project exists
+// e.g. project dir=/home/user/project1 function checks if /home/user exists
 func exists(path string) (bool) {
     info, err := os.Stat(path)
     if !os.IsNotExist(err) && info.IsDir() {
